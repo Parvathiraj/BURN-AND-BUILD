@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>🔥 Burn and Build</title>
+<style>
+    body {
+        font-family: Arial, sans-serif;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+        margin: 0;
+        transition: background 0.5s ease-in-out;
+        background: white;
+    }
+    .container {
+        background: white;
+        padding: 20px;
+        border-radius: 15px;
+        width: 350px;
+        text-align: center;
+        box-shadow: 0 8px 20px rgba(0,0,0,0.2);
+    }
+    h1 {
+        color: #ff6a88;
+    }
+    textarea, select {
+        width: 100%;
+        padding: 10px;
+        border-radius: 10px;
+        border: 1px solid #ccc;
+        margin-top: 10px;
+        cursor: pointer;
+        font-size: 15px;
+        resize: vertical;
+    }
+    button {
+        margin-top: 15px;
+        padding: 10px 15px;
+        border: none;
+        border-radius: 10px;
+        background: #ff6a88;
+        color: white;
+        cursor: pointer;
+        font-size: 16px;
+    }
+    button:hover {
+        background: #ff4f70;
+    }
+    .roast {
+        margin-top: 20px;
+        padding: 15px;
+        background: #f7f7f7;
+        border-radius: 10px;
+        font-style: italic;
+        min-height: 40px;
+        opacity: 0;
+        transition: opacity 0.3s ease-in-out;
+    }
+    .roast.show {
+        opacity: 1;
+    }
+</style>
+</head>
+<body>
+
+<div class="container">
+    <h1>🔥 Burn and Build</h1>
+    <textarea id="situation" rows="3" placeholder="Type what they said..."></textarea>
+
+    <select id="replyType">
+        <option value="">-- Select Reply Style --</option>
+        <option value="funny">😂 Funny</option>
+        <option value="savage">🔥 Savage</option>
+        <option value="sarcastic">🙃 Sarcastic</option>
+        <option value="polite">😇 Polite but Deadly</option>
+    </select>
+
+    <button onclick="roastBot()">Roast Back</button>
+    <div class="roast" id="roastOutput">Your roast will appear here...</div>
+</div>
+
+<script>
+function roastBot() {
+    let input = document.getElementById("situation").value.toLowerCase().trim();
+    let style = document.getElementById("replyType").value;
+    let roast = "";
+
+    const roasts = {
+        funny: [
+            "☁️ You’re like a cloud. When you disappear, it’s a beautiful day.",
+            "😄 You bring everyone joy… when you leave.",
+            "🎨 You have something that no one else has… bad taste.",
+            "🧠 You're proof that evolution can go in reverse.",
+            "👥 You bring people together… because they all want to avoid you.",
+            "🎾 If I throw a stick, will you leave?",
+            "🖍️ I’d explain it to you, but I left my crayons at home.",
+            "🌀 Your brain is like the Bermuda Triangle — stuff goes in and is never found again.",
+            "📉 You lower a room’s IQ instantly.",
+            "📶 You’re like bad WiFi… slow and annoying."
+        ],
+        savage: [
+            "🔌 I’d unplug your life support to charge my phone.",
+            "🗑️ You have absolutely nothing useful to offer.",
+            "🚬 You’re like smoke — toxic and unwanted.",
+            "📺 If I wanted to hear from an idiot, I’d watch reality TV.",
+            "💻 Your aura screams ‘404 personality not found.’",
+            "🏘️ Somewhere, a village is missing its idiot.",
+            "🧬 You have something I’ll never have — bad genetics.",
+            "⏰ Your face could scare a clock into running backwards.",
+            "👟 Your IQ is smaller than your shoe size.",
+            "🧬 You're living proof that natural selection isn’t perfect."
+        ],
+        sarcastic: [
+            "🤯 Wow, did you just invent that? Genius.",
+            "📚 Oh, so you’ve read ‘Roasts for Beginners.’ Nice.",
+            "📝 Hold on, let me take notes… for my ‘How Not to Talk’ guide.",
+            "👻 I bet you tell this to all your imaginary friends.",
+            "💨 Oh, I see you’ve mastered wasting oxygen.",
+            "🎨 That’s as exciting as watching paint dry.",
+            "🚀 Truly revolutionary stupidity.",
+            "📉 Such confidence… from someone so wrong.",
+            "🎭 I’ll pretend that made sense.",
+            "🏊‍♂️ So deep… like a kiddie pool."
+        ],
+        polite: [
+            "🙏 I appreciate your opinion… even though it’s as useful as a screen door on a submarine.",
+            "💖 Bless your heart… you tried.",
+            "🤔 That’s an interesting perspective… for someone who’s clearly confused.",
+            "🐣 It’s cute that you think that matters.",
+            "♻️ I’ll treasure your opinion… in the recycling bin.",
+            "🙇‍♂️ Thank you for sharing, I’ll consider it… and then ignore it.",
+            "😇 You’re not entirely wrong… just mostly.",
+            "🔥 You have such passion… pity it’s misplaced.",
+            "🦁 You’re brave for saying that… and wrong for saying that.",
+            "🧐 Interesting take. Not good, but interesting."
+        ]
+    };
+
+    const colors = {
+        funny: "linear-gradient(135deg, #FFD700, #FFA500)",
+        savage: "linear-gradient(135deg, #FF4500, #8B0000)",
+        sarcastic: "linear-gradient(135deg, #00CED1, #4682B4)",
+        polite: "linear-gradient(135deg, #90EE90, #2E8B57)"
+    };
+
+    if (!input) {
+        roast = "Tell me what they said first! 🤨";
+    } else if (!style) {
+        roast = "Select the type of reply you want. 🎯";
+    } else {
+        const selectedRoasts = roasts[style];
+        roast = selectedRoasts[Math.floor(Math.random() * selectedRoasts.length)];
+        document.body.style.background = colors[style];
+    }
+
+    const outputDiv = document.getElementById("roastOutput");
+    outputDiv.textContent = roast;
+    outputDiv.classList.add("show");
+
+    // Reset background and hide roast after 10 seconds
+    setTimeout(() => {
+        outputDiv.classList.remove("show");
+        document.body.style.background = "white";
+    }, 10000);
+}
+</script>
+
+</body>
+</html>
